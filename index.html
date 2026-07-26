@@ -247,7 +247,7 @@
 
     <div class="left-panel">
         <div class="header-brand">
-            <span>Nexus Core v3.1</span>
+            <span>Emmanuel's Nexus v3.2</span>
             <div class="pulse-dot" title="System Online"></div>
         </div>
         
@@ -258,8 +258,12 @@
 
         <div class="accessories-grid">
             <div class="accessory-card">
-                <div class="accessory-label">Link Status</div>
-                <div class="accessory-value" style="color: #22c55e;">Secure</div>
+                <div class="accessory-label">Operator</div>
+                <div class="accessory-value" style="color: #38bdf8;">Emmanuel M.</div>
+            </div>
+            <div class="accessory-card">
+                <div class="accessory-label">Season</div>
+                <div class="accessory-value" id="season-val">Summer</div>
             </div>
             <div class="accessory-card">
                 <div class="accessory-label">Latency</div>
@@ -274,12 +278,8 @@
                 <div class="accessory-value" id="moon-phase">Tracking</div>
             </div>
             <div class="accessory-card">
-                <div class="accessory-label">System Load</div>
-                <div class="accessory-value" id="sys-load">1.2%</div>
-            </div>
-            <div class="accessory-card">
-                <div class="accessory-label">Memory Core</div>
-                <div class="accessory-value">24.8 MB</div>
+                <div class="accessory-label">Audio Metronome</div>
+                <div class="accessory-value" style="color: #22c55e;">Ready (120 BPM)</div>
             </div>
         </div>
 
@@ -324,6 +324,15 @@
             const now = new Date();
             document.getElementById('time').innerText = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
             document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+            
+            // Determine current season based on Northern Hemisphere (LA)
+            const month = now.getMonth(); // 0-11
+            const day = now.getDate();
+            let season = "Winter";
+            if ((month === 2 && day >= 20) || (month > 2 && month < 5) || (month === 5 && day < 21)) season = "Spring";
+            else if ((month === 5 && day >= 21) || (month > 5 && month < 8) || (month === 8 && day < 22)) season = "Summer";
+            else if ((month === 8 && day >= 22) || (month > 8 && month < 11) || (month === 11 && day < 21)) season = "Autumn";
+            document.getElementById('season-val').innerText = season;
         }
         setInterval(updateClock, 1000);
         updateClock();
@@ -338,12 +347,10 @@
             document.getElementById('uptime-counter').innerText = `${hrs}:${mins}:${secs}`;
         }, 1000);
 
-        // Realistic Sub-Millisecond Jitter & System Load Simulation
+        // Realistic Sub-Millisecond Jitter Simulation
         setInterval(() => {
             const jitter = 12 + Math.floor(Math.random() * 5);
             document.getElementById('latency-val').innerText = `${jitter} ms`;
-            const load = (1.0 + Math.random() * 0.5).toFixed(1);
-            document.getElementById('sys-load').innerText = `${load}%`;
         }, 8000);
 
         // Precise Lunar Phase Algorithm
