@@ -13,95 +13,118 @@
         }
 
         body {
-            background-color: #0d0d0d;
-            color: #f0f0f0;
+            background-color: #0b0f19;
+            color: #f3f4f6;
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 20px;
+            padding: 25px;
             overflow: hidden;
         }
 
-        /* Top Header Area */
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        .time-display {
-            font-size: 5rem;
-            font-weight: 300;
-            letter-spacing: -2px;
-        }
-
-        .weather-season-container {
-            text-align: right;
-            font-size: 1.2rem;
-            color: #a0a0a0;
+        /* Left Side: Command Panel & Telemetry */
+        .left-panel {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            justify-content: space-between;
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
         }
 
-        .weather-main {
-            font-size: 1.8rem;
-            font-weight: 500;
-            color: #fff;
-        }
-
-        /* Bottom Action Bar */
-        .action-bar {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .control-btn {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            padding: 14px 24px;
-            border-radius: 14px;
-            font-size: 1rem;
-            cursor: pointer;
-            backdrop-filter: blur(10px);
-            transition: background 0.2s;
-        }
-
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        /* Slide-out Lighting Panel Modal */
-        .light-panel {
-            position: fixed;
-            bottom: 90px;
-            right: 30px;
-            background: rgba(20, 20, 20, 0.92);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 20px;
-            border-radius: 16px;
-            width: 280px;
+        .top-telemetry {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .time-display {
+            font-size: 4.5rem;
+            font-weight: 300;
+            letter-spacing: -2px;
+            color: #ffffff;
+        }
+
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .telemetry-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 14px;
+            border-radius: 12px;
+        }
+
+        .telemetry-card .label {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .telemetry-card .value {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-top: 4px;
+            color: #f3f4f6;
+        }
+
+        /* Left Action Bar & Light Control Button */
+        .action-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .control-btn {
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            color: #60a5fa;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(59, 130, 246, 0.25);
+        }
+
+        /* Slide-out Lighting Panel Modal (Nested in Left Panel) */
+        .light-panel {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 18px;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+            transition: all 0.2s ease;
         }
 
         .hidden {
-            opacity: 0;
-            transform: translateY(10px);
-            pointer-events: none;
+            display: none;
         }
 
         .light-panel h3 {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
-            margin-bottom: 5px;
+            color: #e5e7eb;
         }
 
         .panel-row {
@@ -111,21 +134,16 @@
             gap: 10px;
         }
 
-        .panel-row label {
-            font-size: 0.9rem;
-            color: #ccc;
-        }
-
         input[type="range"] {
             width: 100%;
-            accent-color: #fff;
+            accent-color: #60a5fa;
         }
 
         input[type="color"] {
             -webkit-appearance: none;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             cursor: pointer;
             background: none;
@@ -135,70 +153,114 @@
         input[type="color"]::-webkit-color-swatch { border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; }
 
         .action-sub-btn {
-            background: rgba(255,255,255,0.1);
-            border: none;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
             color: #fff;
             padding: 8px 12px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
-            width: 100%;
+            font-size: 0.85rem;
         }
 
-        .action-sub-btn:hover { background: rgba(255,255,255,0.2); }
+        .action-sub-btn:hover { background: rgba(255,255,255,0.15); }
+
+        /* Right Side: Google Calendar Container */
+        .right-panel {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(12px);
+        }
+
+        .calendar-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            /* Applies dark styling filter to embedded calendar if needed */
+            filter: invert(90%) hue-rotate(180deg);
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header Section: Time & Weather/Season -->
-    <div class="header-container">
-        <div class="time-display" id="clock">12:00</div>
-        <div class="weather-season-container">
-            <div class="weather-main" id="weatherWidget">72°F · Clear</div>
-            <div id="dateSeasonWidget">Summer · July 26</div>
+    <!-- LEFT SIDE: Clock, Telemetry & Lighting Control Button -->
+    <div class="left-panel">
+        <div class="top-telemetry">
+            <div class="time-display" id="clock">12:00</div>
+            
+            <div class="telemetry-grid">
+                <div class="telemetry-card">
+                    <div class="label">Weather</div>
+                    <div class="value" id="weatherWidget">72°F · Clear</div>
+                </div>
+                <div class="telemetry-card">
+                    <div class="label">Humidity</div>
+                    <div class="value" id="humidityWidget">45%</div>
+                </div>
+                <div class="telemetry-card">
+                    <div class="label">Date / Season</div>
+                    <div class="value" id="dateSeasonWidget">Summer · Jul 26</div>
+                </div>
+                <div class="telemetry-card">
+                    <div class="label">Status</div>
+                    <div class="value" style="color: #34d399;">Online</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Section: Lighting Controls -->
+        <div class="action-bar">
+            <button class="control-btn" onclick="toggleLightPanel()">
+                <span>💡 Lighting Control</span>
+                <span style="font-size: 0.8rem; color: #9ca3af;">Expand ▾</span>
+            </button>
+
+            <!-- Slide-down Lighting Panel Modal -->
+            <div id="lightControlPanel" class="light-panel hidden">
+                <h3>LEDEEZ Bulbs</h3>
+                <button class="action-sub-btn" onclick="connectBulbs()" style="width: 100%;">Pair Bluetooth Bulbs</button>
+                
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <label style="font-size: 0.8rem; color: #9ca3af;">Brightness</label>
+                    <input type="range" min="0" max="100" value="100" oninput="adjustBrightness(this.value)">
+                </div>
+
+                <div class="panel-row">
+                    <button class="action-sub-btn" style="flex: 1;" onclick="setPureWhite()">Pure White</button>
+                    <input type="color" value="#ff0000" onchange="changeColor(this.value)">
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Bottom Action Bar with Toggle Button -->
-    <div class="action-bar">
-        <button class="control-btn" onclick="toggleLightPanel()">💡 Lighting Control</button>
-    </div>
-
-    <!-- Lighting Control Modal Panel -->
-    <div id="lightControlPanel" class="light-panel hidden">
-        <h3>LEDEEZ Bulbs</h3>
-        <button class="action-sub-btn" onclick="connectBulbs()">Pair Bluetooth Bulbs</button>
-        
-        <div class="panel-row" style="flex-direction: column; align-items: stretch;">
-            <label>Brightness</label>
-            <input type="range" min="0" max="100" value="100" oninput="adjustBrightness(this.value)">
-        </div>
-
-        <div class="panel-row">
-            <button class="action-sub-btn" style="flex: 1;" onclick="setPureWhite()">Pure White</button>
-            <input type="color" value="#ff0000" onchange="changeColor(this.value)">
-        </div>
+    <!-- RIGHT SIDE: Google Calendar Split View -->
+    <div class="right-panel">
+        <!-- Embed your clean calendar view or private iFrame feed here -->
+        <iframe class="calendar-frame" src="https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
     </div>
 
     <script>
-        // --- Live Clock & Date Script ---
+        // --- Live Clock Script ---
         function updateClock() {
             const now = new Date();
             let hours = now.getHours();
             const minutes = now.getMinutes().toString().padStart(2, '0');
-            hours = hours % 12 || 12; // 12-hour format
+            hours = hours % 12 || 12;
             document.getElementById('clock').innerText = `${hours}:${minutes}`;
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // --- UI Panel Toggle ---
+        // --- Lighting Panel Toggle ---
         function toggleLightPanel() {
             const panel = document.getElementById('lightControlPanel');
             panel.classList.toggle('hidden');
         }
 
-        // --- Bluetooth Light Control Script ---
+        // --- Bluetooth Light Control Logic ---
         let connectedBulbs = [];
 
         async function connectBulbs() {
