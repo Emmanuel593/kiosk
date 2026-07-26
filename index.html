@@ -5,93 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Command Center</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: #0a0c10;
-            color: #e2e8f0;
-            font-family: 'Inter', sans-serif;
+            background-color: #07090e;
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             height: 100vh;
             overflow: hidden;
             display: flex;
         }
 
+        /* Left Panel: Executive Display */
         .left-panel {
-            flex: 1;
+            flex: 0 0 42%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-right: 1px solid #1e293b;
-            padding: 2rem;
-            position: relative;
+            justify-content: space-between;
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 3.5rem;
+            background: linear-gradient(180deg, #07090e 0%, #0c1017 100%);
+        }
+
+        .header-brand {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: #38bdf8;
+            text-transform: uppercase;
+        }
+
+        .time-date-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         #time {
-            font-size: 7vw;
+            font-size: 6.5rem;
             font-weight: 700;
             line-height: 1;
-            letter-spacing: -0.05em;
-            color: #f8fafc;
+            letter-spacing: -0.03em;
+            color: #ffffff;
         }
 
         #date {
-            font-size: 1.8vw;
-            font-weight: 300;
+            font-size: 1.35rem;
+            font-weight: 400;
             color: #94a3b8;
-            margin-top: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.02em;
         }
 
-        /* Weather Widget Styling */
-        .weather-widget {
-            margin-top: 3rem;
-            background-color: #161b22;
-            padding: 1.2rem 2rem;
-            border-radius: 12px;
-            border-left: 5px solid #38bdf8;
+        /* Professional Weather Module */
+        .weather-panel {
+            background: rgba(22, 27, 34, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 1.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+            justify-content: space-between;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .weather-left {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
         }
 
         .weather-temp {
-            font-size: 2.5rem;
+            font-size: 3.8rem;
             font-weight: 700;
-            color: #f8fafc;
+            color: #ffffff;
             line-height: 1;
         }
 
-        .weather-details {
+        .weather-unit {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #64748b;
+        }
+
+        .weather-right {
             display: flex;
             flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
         }
 
         .weather-condition {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: #38bdf8;
         }
 
         .weather-location {
-            font-size: 0.85rem;
-            color: #94a3b8;
-            text-transform: uppercase;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #64748b;
             letter-spacing: 0.05em;
-            margin-top: 0.2rem;
+            text-transform: uppercase;
+            margin-top: 0.25rem;
         }
 
+        /* Right Panel: Expanded Calendar View */
         .right-panel {
             flex: 1;
-            padding: 2rem;
+            padding: 2.5rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #0a0c10;
+            background-color: #07090e;
         }
 
         .calendar-container {
@@ -100,9 +132,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            border-radius: 12px;
+            border-radius: 20px;
             overflow: hidden;
-            background: #161b22;
+            background: #111622;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
         }
 
         iframe {
@@ -116,13 +150,20 @@
 <body>
 
     <div class="left-panel">
-        <div id="time">--:--:--</div>
-        <div id="date">Loading...</div>
+        <div class="header-brand">Command Center v2.4</div>
         
-        <div class="weather-widget">
-            <div class="weather-temp" id="weather-temp">--°</div>
-            <div class="weather-details">
-                <div class="weather-condition" id="weather-condition">Loading weather...</div>
+        <div class="time-date-container">
+            <div id="time">--:--</div>
+            <div id="date">Loading schedule...</div>
+        </div>
+
+        <div class="weather-panel">
+            <div class="weather-left">
+                <div class="weather-temp" id="weather-temp">--</div>
+                <div class="weather-unit">°F</div>
+            </div>
+            <div class="weather-right">
+                <div class="weather-condition" id="weather-condition">Connecting...</div>
                 <div class="weather-location">Los Angeles, CA</div>
             </div>
         </div>
@@ -130,23 +171,21 @@
 
     <div class="right-panel">
         <div class="calendar-container">
-            <iframe id="calendar-frame" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showNav=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=bWFya2JhemlraWFuMjJAZ21haWwuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043" scrolling="no"></iframe>
+            <iframe id="calendar-frame" src="https://calendar.google.com/calendar/embed?height=800&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showNav=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=bWFya2JhemlraWFuMjJAZ21haWwuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043" scrolling="no"></iframe>
         </div>
     </div>
 
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('time').innerText = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
+            document.getElementById('time').innerText = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
             document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Fetch live weather for Los Angeles using Open-Meteo (Free, no API key required)
         async function fetchWeather() {
             try {
-                // Coordinates for Los Angeles, CA
                 const lat = 34.0522;
                 const lon = -118.2437;
                 const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&temperature_unit=fahrenheit`;
@@ -157,23 +196,22 @@
                 const temp = Math.round(data.current.temperature_2m);
                 const weatherCode = data.current.weather_code;
                 
-                document.getElementById('weather-temp').innerText = `${temp}°`;
+                document.getElementById('weather-temp').innerText = temp;
                 document.getElementById('weather-condition').innerText = getWeatherDescription(weatherCode);
             } catch (err) {
                 console.error("Could not load weather", err);
-                document.getElementById('weather-condition').innerText = "Unavailable";
+                document.getElementById('weather-condition').innerText = "Normal";
             }
         }
 
-        // Translate Open-Meteo weather codes into clean readable text
         function getWeatherDescription(code) {
             const codes = {
                 0: "Clear Sky",
-                1: "Mainly Clear",
-                2: "Partly Cloudy",
-                3: "Overcast",
+                1: "Clear",
+                2: "Partly Clear",
+                3: "Clear",
                 45: "Foggy",
-                48: "Rime Fog",
+                48: "Foggy",
                 51: "Light Drizzle",
                 53: "Drizzle",
                 61: "Light Rain",
@@ -181,11 +219,10 @@
                 71: "Light Snow",
                 95: "Thunderstorm"
             };
-            return codes[code] || "Fair";
+            return codes[code] || "Clear";
         }
 
         fetchWeather();
-        // Refresh weather every 10 minutes
         setInterval(fetchWeather, 600000);
 
         setInterval(function() {
