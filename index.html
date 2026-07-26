@@ -17,104 +17,127 @@
             color: #f3f4f6;
             height: 100vh;
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
+            grid-template-columns: 1.1fr 1.4fr;
             gap: 20px;
-            padding: 25px;
+            padding: 20px;
             overflow: hidden;
         }
 
-        /* Left Side: Command Panel & Telemetry */
+        /* Left Panel */
         .left-panel {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             background: rgba(17, 24, 39, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 16px;
+            padding: 24px;
             backdrop-filter: blur(12px);
         }
 
-        .top-telemetry {
+        .top-section {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
         }
 
         .time-display {
-            font-size: 4.5rem;
+            font-size: 3.8rem;
             font-weight: 300;
             letter-spacing: -2px;
             color: #ffffff;
         }
 
-        .telemetry-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .telemetry-card {
+        /* Weather Card */
+        .weather-card {
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 14px;
+            padding: 16px;
             border-radius: 12px;
-        }
-
-        .telemetry-card .label {
-            font-size: 0.8rem;
-            color: #9ca3af;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .telemetry-card .value {
-            font-size: 1.25rem;
-            font-weight: 500;
-            margin-top: 4px;
-            color: #f3f4f6;
-        }
-
-        /* Left Action Bar & Light Control Button */
-        .action-bar {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
-        .control-btn {
-            background: rgba(59, 130, 246, 0.15);
-            border: 1px solid rgba(59, 130, 246, 0.4);
-            color: #60a5fa;
-            padding: 14px 20px;
-            border-radius: 12px;
-            font-size: 1rem;
+        .weather-main {
+            font-size: 1.4rem;
             font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-            text-align: left;
+            color: #fff;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .control-btn:hover {
-            background: rgba(59, 130, 246, 0.25);
+        .weather-details {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            display: flex;
+            gap: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 8px;
         }
 
-        /* Slide-out Lighting Panel Modal (Nested in Left Panel) */
+        .telemetry-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .mini-badge {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            color: #9ca3af;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 1;
+        }
+
+        .mini-badge span {
+            color: #f3f4f6;
+            font-weight: 500;
+        }
+
+        /* Compact Lighting Control Button & Modal */
+        .lighting-container {
+            position: relative;
+        }
+
+        .control-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
         .light-panel {
+            position: absolute;
+            bottom: 50px;
+            left: 0;
             background: rgba(15, 23, 42, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 18px;
+            padding: 16px;
             border-radius: 14px;
+            width: 260px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: 10px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-            transition: all 0.2s ease;
+            backdrop-filter: blur(12px);
         }
 
         .hidden {
@@ -122,7 +145,7 @@
         }
 
         .light-panel h3 {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             color: #e5e7eb;
         }
@@ -142,8 +165,8 @@
         input[type="color"] {
             -webkit-appearance: none;
             border: none;
-            width: 38px;
-            height: 38px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             cursor: pointer;
             background: none;
@@ -156,7 +179,7 @@
             background: rgba(255,255,255,0.08);
             border: 1px solid rgba(255,255,255,0.12);
             color: #fff;
-            padding: 8px 12px;
+            padding: 7px 12px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.85rem;
@@ -164,11 +187,11 @@
 
         .action-sub-btn:hover { background: rgba(255,255,255,0.15); }
 
-        /* Right Side: Google Calendar Container */
+        /* Right Panel: Calendar */
         .right-panel {
             background: rgba(17, 24, 39, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -179,46 +202,48 @@
             width: 100%;
             height: 100%;
             border: none;
-            /* Applies dark styling filter to embedded calendar if needed */
             filter: invert(90%) hue-rotate(180deg);
         }
     </style>
 </head>
 <body>
 
-    <!-- LEFT SIDE: Clock, Telemetry & Lighting Control Button -->
+    <!-- LEFT SIDE -->
     <div class="left-panel">
-        <div class="top-telemetry">
+        <div class="top-section">
             <div class="time-display" id="clock">12:00</div>
             
-            <div class="telemetry-grid">
-                <div class="telemetry-card">
-                    <div class="label">Weather</div>
-                    <div class="value" id="weatherWidget">72°F · Clear</div>
+            <!-- Weather Card -->
+            <div class="weather-card">
+                <div class="weather-main">
+                    <span>72°F · Clear</span>
+                    <span style="font-size: 1rem; color: #9ca3af;">Los Angeles</span>
                 </div>
-                <div class="telemetry-card">
-                    <div class="label">Humidity</div>
-                    <div class="value" id="humidityWidget">45%</div>
+                <div class="weather-details">
+                    <span>Humidity: 45%</span>
+                    <span>Wind: 4 mph</span>
                 </div>
-                <div class="telemetry-card">
-                    <div class="label">Date / Season</div>
-                    <div class="value" id="dateSeasonWidget">Summer · Jul 26</div>
+            </div>
+
+            <!-- Status & Date/Season Row -->
+            <div class="telemetry-row">
+                <div class="mini-badge">
+                    <span>Status</span>
+                    <span style="color: #34d399;">Online</span>
                 </div>
-                <div class="telemetry-card">
-                    <div class="label">Status</div>
-                    <div class="value" style="color: #34d399;">Online</div>
+                <div class="mini-badge">
+                    <span>Season</span>
+                    <span>Summer</span>
                 </div>
             </div>
         </div>
 
-        <!-- Action Section: Lighting Controls -->
-        <div class="action-bar">
+        <!-- Compact Lighting Button & Floating Panel -->
+        <div class="lighting-container">
             <button class="control-btn" onclick="toggleLightPanel()">
-                <span>💡 Lighting Control</span>
-                <span style="font-size: 0.8rem; color: #9ca3af;">Expand ▾</span>
+                💡 Lights
             </button>
 
-            <!-- Slide-down Lighting Panel Modal -->
             <div id="lightControlPanel" class="light-panel hidden">
                 <h3>LEDEEZ Bulbs</h3>
                 <button class="action-sub-btn" onclick="connectBulbs()" style="width: 100%;">Pair Bluetooth Bulbs</button>
@@ -236,10 +261,9 @@
         </div>
     </div>
 
-    <!-- RIGHT SIDE: Google Calendar Split View -->
+    <!-- RIGHT SIDE: Clean Agenda Calendar Feed -->
     <div class="right-panel">
-        <!-- Embed your clean calendar view or private iFrame feed here -->
-        <iframe class="calendar-frame" src="https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FLos_Angeles"></iframe>
+        <iframe class="calendar-frame" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showTitle=0&showNav=0&showTabs=0&showCalendars=0&showTz=0&mode=AGENDA&src=bWFya2JhemlraWFuMjJAZ21haWwuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043" frameborder="0" scrolling="no"></iframe>
     </div>
 
     <script>
