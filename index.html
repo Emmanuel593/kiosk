@@ -26,10 +26,11 @@
             align-items: center;
             border-right: 1px solid #1e293b;
             padding: 2rem;
+            position: relative;
         }
 
         #time {
-            font-size: 12vw;
+            font-size: 7vw;
             font-weight: 700;
             line-height: 1;
             letter-spacing: -0.05em;
@@ -37,7 +38,7 @@
         }
 
         #date {
-            font-size: 2.5vw;
+            font-size: 1.8vw;
             font-weight: 300;
             color: #94a3b8;
             margin-top: 1rem;
@@ -45,105 +46,152 @@
             letter-spacing: 0.1em;
         }
 
-        .right-panel {
-            flex: 1;
-            padding: 3rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            overflow-y: hidden;
-        }
-
-        .agenda-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #38bdf8;
-            margin-bottom: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        #agenda-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .event-card {
+        /* Weather Widget Styling */
+        .weather-widget {
+            margin-top: 3rem;
             background-color: #161b22;
-            padding: 1.5rem;
+            padding: 1.2rem 2rem;
             border-radius: 12px;
             border-left: 5px solid #38bdf8;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
         }
 
-        .event-details {
+        .weather-temp {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f8fafc;
+            line-height: 1;
+        }
+
+        .weather-details {
             display: flex;
             flex-direction: column;
         }
 
-        .event-summary {
-            font-size: 1.25rem;
+        .weather-condition {
+            font-size: 1.1rem;
             font-weight: 600;
-            color: #f1f5f9;
-        }
-
-        .event-time {
-            font-size: 0.9rem;
-            color: #94a3b8;
-            margin-top: 0.5rem;
-        }
-
-        .event-status {
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 4px 12px;
-            border-radius: 20px;
-            text-transform: uppercase;
-        }
-
-        .status-upcoming {
-            background-color: rgba(56, 189, 248, 0.1);
             color: #38bdf8;
         }
 
-        .status-now {
-            background-color: rgba(34, 197, 94, 0.1);
-            color: #22c55e;
+        .weather-location {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.2rem;
+        }
+
+        .right-panel {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0a0c10;
+        }
+
+        .calendar-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #161b22;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: invert(90%) hue-rotate(180deg) contrast(90%);
         }
     </style>
 </head>
 <body>
 
     <div class="left-panel">
-        <div id="time">--:--</div>
+        <div id="time">--:--:--</div>
         <div id="date">Loading...</div>
+        
+        <div class="weather-widget">
+            <div class="weather-temp" id="weather-temp">--°</div>
+            <div class="weather-details">
+                <div class="weather-condition" id="weather-condition">Loading weather...</div>
+                <div class="weather-location">Los Angeles, CA</div>
+            </div>
+        </div>
     </div>
 
     <div class="right-panel">
-        <div class="agenda-title">Upcoming</div>
-        <div id="agenda-list">
-            <div class="event-card" style="border-left-color: #38bdf8;">
-                <div class="event-details">
-                    <div class="event-summary">Command Center Online</div>
-                    <div class="event-time">System fully operational</div>
-                </div>
-                <div class="event-status status-upcoming">Ready</div>
-            </div>
+        <div class="calendar-container">
+            <iframe id="calendar-frame" src="https://calendar.google.com/calendar/embed?height=600&wkst=1&ctz=America%2FLos_Angeles&showPrint=0&showNav=0&showTitle=0&showTabs=0&showCalendars=0&showTz=0&src=bWFya2JhemlraWFuMjJAZ21haWwuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&color=%23039be5&color=%230b8043" scrolling="no"></iframe>
         </div>
     </div>
 
     <script>
         function updateClock() {
             const now = new Date();
-            document.getElementById('time').innerText = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            document.getElementById('time').innerText = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
             document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
         }
         setInterval(updateClock, 1000);
         updateClock();
+
+        // Fetch live weather for Los Angeles using Open-Meteo (Free, no API key required)
+        async function fetchWeather() {
+            try {
+                // Coordinates for Los Angeles, CA
+                const lat = 34.0522;
+                const lon = -118.2437;
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&temperature_unit=fahrenheit`;
+                
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                const temp = Math.round(data.current.temperature_2m);
+                const weatherCode = data.current.weather_code;
+                
+                document.getElementById('weather-temp').innerText = `${temp}°`;
+                document.getElementById('weather-condition').innerText = getWeatherDescription(weatherCode);
+            } catch (err) {
+                console.error("Could not load weather", err);
+                document.getElementById('weather-condition').innerText = "Unavailable";
+            }
+        }
+
+        // Translate Open-Meteo weather codes into clean readable text
+        function getWeatherDescription(code) {
+            const codes = {
+                0: "Clear Sky",
+                1: "Mainly Clear",
+                2: "Partly Cloudy",
+                3: "Overcast",
+                45: "Foggy",
+                48: "Rime Fog",
+                51: "Light Drizzle",
+                53: "Drizzle",
+                61: "Light Rain",
+                63: "Moderate Rain",
+                71: "Light Snow",
+                95: "Thunderstorm"
+            };
+            return codes[code] || "Fair";
+        }
+
+        fetchWeather();
+        // Refresh weather every 10 minutes
+        setInterval(fetchWeather, 600000);
+
+        setInterval(function() {
+            var iframe = document.getElementById('calendar-frame');
+            iframe.src = iframe.src;
+        }, 30000);
     </script>
 </body>
 </html>
